@@ -49,10 +49,12 @@ export const Sensor:React.FC<SensorProps> = ({type, value}) => {
         <Typography fontWeight={"bold"}>{title}</Typography>
       </Box>
       <Box mt={2}>
-         {type == "temperature" && <TemeratureDisplay value={value}/>}
-         {type == "light" && <LightDisplay value={value}/>}
-         {type == "potentiometer" && <BrightnessDisplay value={value}/>}
-         {type == "enabled" && <EnabledDisplay value={value}/>}
+         {value == -999 ? <Box paddingTop={3}><Typography>No data revcieved via MQTT</Typography></Box> : <>
+            {type == "temperature" && <TemeratureDisplay value={value}/>}
+            {type == "light" && <LightDisplay value={value}/>}
+            {type == "potentiometer" && <BrightnessDisplay value={value}/>}
+            {type == "enabled" && <EnabledDisplay value={value}/>}
+        </>}
       </Box>
     </Paper>
     )
