@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import mqtt from 'mqtt';
 
 export type MQTTSubsciberProps = {
@@ -33,5 +33,46 @@ const MqttSubscriber:React.FC<MQTTSubsciberProps> = ({url, topic, onMessage}) =>
 
   return <></>;
 };
+
+export type MqttPublisherProps = {
+  url: string;
+  topic: string;
+};
+
+export type MqttPublisherHandle = {
+  publish: (value: number) => void;
+};
+
+export const MqttPublisher = forwardRef<MqttPublisherHandle, MqttPublisherProps>(({ url, topic }, ref) => {
+  const clientRef = useRef<mqtt.MqttClient | null>(null);
+
+  useEffect(() => {
+    const client = mqtt.connect(url);
+    clientRef.current = client;
+
+    client.on('connect', () => {
+      console.log(`Publisher connected to ${url}`);
+    });
+
+    return () => {
+      if (client.connected) {
+        client.end();
+      }
+    };
+  }, [url]);
+
+  useImperativeHandle(ref, () => ({
+    publish: (value: number) => {
+      if (clientRef.current?.connected) {
+        clientRef.current.publish(topic, value.toString());
+        console.log(`Published to ${topic}: ${value}`);
+      } else {
+        console.warn("MQTT client not connected");
+      }
+    }
+  }));
+
+  return null;
+});
 
 export default MqttSubscriber;

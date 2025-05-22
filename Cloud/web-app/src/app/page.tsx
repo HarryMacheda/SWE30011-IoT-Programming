@@ -1,3 +1,5 @@
+import { FanControls } from "@/components/FanControls";
+import { LightControls } from "@/components/LightControls";
 import MqttSubscriber from "@/components/MQTT";
 import { SensorDashboard } from "@/components/SensorDashboard";
 import { Card, CardContent, CardHeader, Stack } from "@mui/material";
@@ -10,12 +12,13 @@ export default function Home() {
       <Card>    
         <CardHeader slotProps={{title:{fontWeight:"bold"}}} title="Smart Fan"/>
         <CardContent>
+          <FanControls />
         </CardContent>
       </Card>
       <Card>    
         <CardHeader slotProps={{title:{fontWeight:"bold"}}} title="Smart Light"/>
         <CardContent>
-          Light stuff
+          <LightControls />
         </CardContent>
       </Card>
     </Stack>

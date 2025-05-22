@@ -3,13 +3,14 @@ import { Box, Grid, Paper, Slider, Switch, Typography } from "@mui/material"
 import ThermostatIcon from '@mui/icons-material/Thermostat';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import LightModeIcon from '@mui/icons-material/LightMode';
-import ToggleOffIcon from '@mui/icons-material/ToggleOff';
+import FlashlightOffIcon from '@mui/icons-material/FlashlightOff';
+import ModeFanOffIcon from '@mui/icons-material/ModeFanOff';
 import { ReactNode } from "react";
 import { styled } from '@mui/material/styles';
 
 
 export type SensorProps = {
-    type: 'temperature' | 'light' | "potentiometer" | "enabled",
+    type: 'temperature' | 'light' | "potentiometer" | "light-enabled" | "fan-enabled",
     value:number,
 }
 
@@ -34,10 +35,15 @@ export const Sensor:React.FC<SensorProps> = ({type, value}) => {
             title = "LED Brightness";
             icon = <LightbulbIcon/>;
             break;
-        case "enabled":
+        case "light-enabled":
             colour = "#118ab2";
             title = "Light Enabled";
-            icon = <ToggleOffIcon/>;
+            icon = <FlashlightOffIcon/>;
+            break;
+         case "fan-enabled":
+            colour = "#118ab2";
+            title = "Fan Enabled";
+            icon = <ModeFanOffIcon/>;
             break;
     }
 
@@ -53,7 +59,7 @@ export const Sensor:React.FC<SensorProps> = ({type, value}) => {
             {type == "temperature" && <TemeratureDisplay value={value}/>}
             {type == "light" && <LightDisplay value={value}/>}
             {type == "potentiometer" && <BrightnessDisplay value={value}/>}
-            {type == "enabled" && <EnabledDisplay value={value}/>}
+            {(type == "light-enabled" || type == "fan-enabled") && <EnabledDisplay value={value}/>}
         </>}
       </Box>
     </Paper>
