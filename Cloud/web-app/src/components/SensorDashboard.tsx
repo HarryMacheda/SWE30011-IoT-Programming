@@ -23,11 +23,11 @@ export function SensorDashboard() {
             <Sensor type="light"  value={light}/>
             <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/sensor/light" onMessage={setLight}/>
             <Sensor type="potentiometer"  value={potentiometer}/>
-            <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/sensor/potentiometer" onMessage={setLightEnabled}/>
+            <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/sensor/potentiometer" onMessage={setPotentiometer}/>
             <Sensor type="light-enabled"  value={lightEnabled}/>
-            <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/sensor/light/enabled" onMessage={setPotentiometer}/>
+            <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/control/light/enabled" onMessage={setLightEnabled}/>
             <Sensor type="fan-enabled"  value={fanEnabled}/>
-            <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/sensor/fan/enabled" onMessage={setFanEnabled}/>
+            <MqttSubscriber url="wss://test.mosquitto.org:8081" topic="103603101/control/fan/enabled" onMessage={setFanEnabled}/>
           </Stack>
         </CardContent>
       </Card>
